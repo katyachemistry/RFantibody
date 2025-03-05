@@ -98,12 +98,12 @@ def parse_pdb(filename, xyz27=False,seq=False):
     return parse_pdb_lines(lines, xyz27, seq)
 
 #'''
-def parse_pdb_lines(lines, xyz27, seq, get_aa=util.aa2num.get):
+def parse_pdb_lines(lines, xyz27, seq, get_aa=aa2num.get):
 
     # indices of residues observed in the structure
     idx_s = [int(l[22:26]) for l in lines if l[:4]=="ATOM" and l[12:16].strip()=="CA"]
     res = [(l[22:26],l[17:20]) for l in lines if l[:4]=="ATOM" and l[12:16].strip()=="CA"]
-    seq = [util.aa2num[r[1]] if r[1] in util.aa2num.keys() else 20 for r in res]
+    seq = [aa2num[r[1]] if r[1] in aa2num.keys() else 20 for r in res]
     # 4 BB + up to 10 SC atoms
     if xyz27:
         xyz = np.full((len(idx_s), 27, 3), np.nan, dtype=np.float32)
@@ -429,7 +429,7 @@ def parse_HLT_remarked(pdb_path, preserve_pdb_numbering=False):
 def parse_HLT_lines(lines, preserve_pdb_numbering=False):
     # indices of residues observed in the structure
     res = [(l[22:26],l[17:20]) for l in lines if l[:4]=="ATOM" and l[12:16].strip()=="CA"]
-    seq = [util.aa2num[r[1]] if r[1] in util.aa2num.keys() else 20 for r in res]
+    seq = [aa2num[r[1]] if r[1] in aa2num.keys() else 20 for r in res]
     pdb_idx = [( l[21:22].strip(), int(l[22:26].strip()) ) for l in lines if l[:4]=="ATOM" and l[12:16].strip()=="CA"]  # chain letter, res num
 
     # 4 BB + up to 10 SC atoms
@@ -439,7 +439,7 @@ def parse_HLT_lines(lines, preserve_pdb_numbering=False):
         if l[:4] == "ATOM":
             chain, resNo, atom, aa = l[21:22], int(l[22:26]), ' '+l[12:16].strip().ljust(3), l[17:20]
             idx = pdb_idx.index((chain,resNo))
-            for i_atm, tgtatm in enumerate(util.aa2long[util.aa2num[aa]]):
+            for i_atm, tgtatm in enumerate(util.aa2long[aa2num[aa]]):
                 if tgtatm is not None and tgtatm.strip() == atom.strip(): # ignore whitespace
                     xyz[idx,i_atm,:] = [float(l[30:38]), float(l[38:46]), float(l[46:54])]
                     break

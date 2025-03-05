@@ -14,6 +14,8 @@ from rfantibody.rfdiffusion.util import \
     torsion_can_flip as TOR_CAN_FLIP, \
     reference_angles as REF_ANGLES 
 
+import rfantibody.rfdiffusion.util as util
+
 
 ab_tasks = [
     'ab_diff',
