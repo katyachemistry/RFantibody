@@ -1,6 +1,6 @@
 # RFantibody
 
-This is a repo with fixes which helped to successfully run examples in docker. Some scripts and directories were copied, so you may find duplicate files in different directories.
+See "fixed" branch. This is a repo with fixes which helped to successfully run examples in docker. Some scripts and directories were copied, so you may find duplicate files in different directories.
 
 ### Structure-Based _de novo_ Antibody Design
 
